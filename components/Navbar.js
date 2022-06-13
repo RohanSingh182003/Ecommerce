@@ -7,7 +7,7 @@ import { FaPlus , FaMinus } from 'react-icons/fa';
 
 // Empty Space Code = &nbsp;
 
-const Navbar = () => {
+const Navbar = ({clearCart , addToCart , RemoveFromCart , cart , addItems}) => {
   const ref = useRef()
   const toggleSidebar = () => {
     if(ref.current.classList.contains('translate-x-full')){
@@ -35,37 +35,27 @@ const Navbar = () => {
     <Link href={'/homeappliances'}><a className="mr-5 hover:text-gray-900">Home Appliances</a></Link>
     <Link href={'/grocery'}><a className="mr-5 hover:text-gray-900">Grocery</a></Link>
     </nav>
-    <div className="absolute top-0 right-0 md:top-6 md:right-6" onClick={toggleSidebar}>
+    <div className="absolute top-0 right-0 md:top-6 md:right-6 cursor-pointer" onClick={toggleSidebar}>
     <a><AiOutlineShoppingCart className='text-3xl text-pink-500 m-6 md:m-0'/></a>
     </div>
   {/* Slider starts here */}
   <div ref={ref} className="absolute top-0 right-0 bg-gray-100 px-10 pt-2 h-full transform translate-x-full transition-transform">
     <span className='absolute right-9 top-6 cursor-pointer' onClick={toggleSidebar}><GrClose/></span>
-    <ol className='mt-14 list-decimal'>
+    <ul className='mt-14 list-decimal'>
       <div className="flex">
       <h3 className='w-2/3 font-extrabold text-pink-500 text-center'>Products</h3>
       <h3 className='w-1/3 font-extrabold text-pink-500 text-center'>Quantity</h3>
       </div>
       {/* items */}
-      <div className="flex my-6">
-      <div className="w-2/3 font-semibold flex justify-center items-center"><li>Jeans</li></div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-pink-300'/><span> 1 </span><FaPlus className='text-pink-300'/></div>
-      </div>
-      <div className="flex my-6">
-      <div className="w-2/3 font-semibold flex justify-center items-center"><li>Jeans</li></div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-pink-300'/><span> 1 </span><FaPlus className='text-pink-300'/></div>
-      </div>
-      <div className="flex my-6">
-      <div className="w-2/3 font-semibold flex justify-center items-center"><li>Jeans</li></div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-pink-300'/><span> 1 </span><FaPlus className='text-pink-300'/></div>
-      </div>
-      <div className="flex my-6">
-      <div className="w-2/3 font-semibold flex justify-center items-center"><li>Jeans</li></div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-pink-300'/><span> 1 </span><FaPlus className='text-pink-300'/></div>
-      </div>
-      <div className="flex my-6">
-      <div className="w-2/3 font-semibold flex justify-center items-center"><li>Jeans</li></div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-pink-300'/><span> 1 </span><FaPlus className='text-pink-300'/></div>
-      </div>
-    </ol>
+      {Object.keys(cart).length <= 0 && <div className='my-5 text-center font-bold text-red-500'>Your cart is Empty!</div>}
+     {Object.keys(cart).map((k) => { return <li key={k}><div className="flex my-6">
+      <div className="w-2/3 font-semibold flex justify-center items-center my-6">{cart[k].prodName}</div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-red-500 cursor-pointer' onClick={()=>{RemoveFromCart('homeappliances')}} /><span>{cart[k].qty}</span><FaPlus className='text-green-500 cursor-pointer' onClick={()=>{addItems('homeappliances')}}/></div>
+      </div></li> 
+})}
+    </ul>
     <div className="flex">
     <button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 p-2 focus:outline-none hover:bg-pink-600 rounded text-sm w-1/2">Checkout</button>
-    <button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded text-sm p-2 w-1/2">Clear&nbsp;Cart</button>
+    <button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded text-sm p-2 w-1/2" onClick={()=>{clearCart()}}>Clear&nbsp;Cart</button>
     </div>
     </div>
   </div>
