@@ -7,7 +7,7 @@ import { FaPlus , FaMinus } from 'react-icons/fa';
 
 // Empty Space Code = &nbsp;
 
-const Navbar = ({clearCart , addToCart , RemoveFromCart , cart , addItems}) => {
+const Navbar = ({clearCart , subTotal , RemoveFromCart , cart , addItems}) => {
   const ref = useRef()
   const toggleSidebar = () => {
     if(ref.current.classList.contains('translate-x-full')){
@@ -20,9 +20,9 @@ const Navbar = ({clearCart , addToCart , RemoveFromCart , cart , addItems}) => {
     }
   }
   return (
-    <div>
+    <div className='sticky top-0 bg-gray-50 z-10'>
 <header className="text-gray-600 body-font bg-gray-50">
-  <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+  <div className="container mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
     <Link href={'/'}><a className="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-10 h-10 text-white p-2 bg-pink-500 rounded-full" viewBox="0 0 24 24">
         <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
@@ -39,7 +39,7 @@ const Navbar = ({clearCart , addToCart , RemoveFromCart , cart , addItems}) => {
     <a><AiOutlineShoppingCart className='text-3xl text-pink-500 m-6 md:m-0'/></a>
     </div>
   {/* Slider starts here */}
-  <div ref={ref} className="absolute top-0 right-0 bg-gray-100 px-10 pt-2 h-full transform translate-x-full transition-transform">
+  <div ref={ref} className="absolute top-0 right-0 bg-gray-100 px-10 pt-2 h-[100vh] transform translate-x-full transition-transform">
     <span className='absolute right-9 top-6 cursor-pointer' onClick={toggleSidebar}><GrClose/></span>
     <ul className='mt-14 list-decimal'>
       <div className="flex">
@@ -54,7 +54,7 @@ const Navbar = ({clearCart , addToCart , RemoveFromCart , cart , addItems}) => {
 })}
     </ul>
     <div className="flex">
-    <button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 p-2 focus:outline-none hover:bg-pink-600 rounded text-sm w-1/2">Checkout</button>
+    <Link href={'/checkout'}><button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 p-2 focus:outline-none hover:bg-pink-600 rounded text-sm w-1/2">Checkout</button></Link>
     <button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded text-sm p-2 w-1/2" onClick={()=>{clearCart()}}>Clear&nbsp;Cart</button>
     </div>
     </div>

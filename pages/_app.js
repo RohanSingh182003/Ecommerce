@@ -13,6 +13,7 @@ function MyApp({ Component, pageProps }) {
     try {      
       if (localStorage.getItem('item')) {
         setItem(JSON.parse(localStorage.getItem('item')))
+        saveCart(JSON.parse(localStorage.getItem('item')))
       }
     } catch (error) {
       console.error(error);
@@ -46,18 +47,20 @@ function MyApp({ Component, pageProps }) {
   }
 
   const RemoveFromCart = (id) => {
-      if(newItem[id].qty<=0){
-        delete newItem[id];
+      if(newItem[id].qty<0){
+        delete newItem[id]
       }
       else{
         newItem[id].qty -= 1;
+        setItem(newItem)
+        saveCart(newItem)
       }
-    setItem(newItem)
-    saveCart(newItem)
   }
 
   const addItems =(id) => {
     newItem[id].qty += 1;
+    setItem(newItem)
+    saveCart(newItem)
   }
   return (
     <>
