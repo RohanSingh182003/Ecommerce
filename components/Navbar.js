@@ -38,7 +38,7 @@ const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems } ) => {
           </nav>
           <div className="absolute top-0 right-0 md:top-6 md:right-6 cursor-pointer">
             <div className='flex md:space-x-2'>
-            <Link href={'/login'}><a><RiAccountCircleFill className='text-3xl text-pink-500 m-2 md:m-0' /></a></Link>
+            <Link href={'/login'}><a><RiAccountCircleFill className='text-3xl text-pink-500 mt-2 md:mt-0 md:m-2' /></a></Link>
             <a><AiOutlineShoppingCart className='text-3xl text-pink-500 m-2 md:m-0'  onClick={toggleSidebar}/></a>
             </div>
           </div>
