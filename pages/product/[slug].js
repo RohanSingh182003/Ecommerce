@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router'
 import { useState } from 'react'
+import mongoose from 'mongoose'
+import Product from '../../models/Product'
 
-const Slug = ({addToCart}) => {
+const Slug = ({addToCart , product , variants}) => {
   const router = useRouter()
   const { slug } = router.query
   const [pin, setPin] = useState()
@@ -18,6 +20,13 @@ const Slug = ({addToCart}) => {
 }
   const handleOnChange = (e) => {
     setPin(e.target.value)
+  }
+
+  const [color, setColor] = useState(product.color)
+  const [size, setSize] = useState(product.size)
+  const refreshVarient = (newColor , newSize) => {
+    let url = `http://localhost:3000/product/${variants[newColor][newSize]['slug']}`;
+    window.location = url;
   }
   return <>
   <section className="text-gray-600 body-font overflow-hidden">
@@ -68,18 +77,22 @@ const Slug = ({addToCart}) => {
         <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
           <div className="flex">
             <span className="mr-3">Color</span>
-            <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-            <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-            <button className="border-2 border-gray-300 ml-1 bg-pink-500 rounded-full w-6 h-6 focus:outline-none"></button>
+            {Object.keys(variants).includes('white') && Object.keys(variants['white']).includes(size) && <button onClick={()=>{refreshVarient('white',size)}} className={`border-2 ml-1 rounded-full w-6 h-6 focus:outline-none ${color === 'white'?'border-black':'border-gray-300'}`}></button>}
+            {Object.keys(variants).includes('red') && Object.keys(variants['red']).includes(size) && <button onClick={()=>{refreshVarient('red',size)}} className={`border-2 ml-1 bg-red-700 rounded-full w-6 h-6 focus:outline-none ${color === 'red'?'border-black':'border-gray-300'}`}></button>}
+            {Object.keys(variants).includes('green') && Object.keys(variants['green']).includes(size) && <button onClick={()=>{refreshVarient('green',size)}} className={`border-2 ml-1 bg-green-700 rounded-full w-6 h-6 focus:outline-none ${color === 'green'?'border-black':'border-gray-300'}`}></button>}
+            {Object.keys(variants).includes('blue') && Object.keys(variants['blue']).includes(size) && <button onClick={()=>{refreshVarient('blue',size)}} className={`border-2 ml-1 bg-blue-700 rounded-full w-6 h-6 focus:outline-none ${color === 'blue'?'border-black':'border-gray-300'}`}></button>}
+            {Object.keys(variants).includes('yellow') && Object.keys(variants['yellow']).includes(size) && <button onClick={()=>{refreshVarient('yellow',size)}} className={`border-2 ml-1 bg-yellow-700 rounded-full w-6 h-6 focus:outline-none ${color === 'yellow'?'border-black':'border-gray-300'}`}></button>}
+            {Object.keys(variants).includes('black') && Object.keys(variants['black']).includes(size) && <button onClick={()=>{refreshVarient('black',size)}} className={`border-2 ml-1 bg-black rounded-full w-6 h-6 focus:outline-none ${color === 'black'?'border-black':'border-gray-300'}`}></button>}
           </div>
           <div className="flex ml-6 items-center">
             <span className="mr-3">Size</span>
             <div className="relative">
-              <select className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-500 text-base pl-3 pr-10">
-                <option>SM</option>
-                <option>M</option>
-                <option>L</option>
-                <option>XL</option>
+              <select value={size} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-500 text-base pl-3 pr-10" onChange={(e)=>{refreshVarient(color,e.target.value)}}>
+                {Object.keys(variants[color]).includes('S') && <option value={'S'}>S</option>}
+                {Object.keys(variants[color]).includes('M') && <option value={'M'}>M</option>}
+                {Object.keys(variants[color]).includes('L') && <option value={'L'}>L</option>}
+                {Object.keys(variants[color]).includes('XL') && <option value={'XL'}>XL</option>}
+                {Object.keys(variants[color]).includes('XXL') && <option value={'XXL'}>XXL</option>}
               </select>
               <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                 <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-4 h-4" viewBox="0 0 24 24">
@@ -90,8 +103,8 @@ const Slug = ({addToCart}) => {
           </div>
         </div>
         <div className="flex">
-          <span className="title-font font-medium text-2xl text-gray-900">₹4999</span>
-          <button className="flex ml-2 md:ml-auto text-white bg-pink-500 border-0 py-1 md:py-2 px-3 md:px-6 focus:outline-none hover:bg-pink-600 rounded" onClick={()=> addToCart(slug,1,'Wear The Code' ,499,'XL','Red')}>Add&nbsp;to&nbsp;Cart</button>
+          <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span>
+          <button className="flex ml-2 md:ml-auto text-white bg-pink-500 border-0 py-1 md:py-2 px-3 md:px-6 focus:outline-none hover:bg-pink-600 rounded" onClick={()=> addToCart(product.slug,1,product.title,product.price,size,color)}>Add&nbsp;to&nbsp;Cart</button>
           <button className="flex ml-2 md:ml-8 text-white bg-pink-500 border-0 py-1 md:py-2 px-3 md:px-6 focus:outline-none hover:bg-pink-600 rounded">Buy&nbsp;Now</button>
           <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
             <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
@@ -116,4 +129,24 @@ const Slug = ({addToCart}) => {
   </>
 }
 
+export async function getServerSideProps( context ) {
+  if ( !mongoose.connections[0].readyState ) {
+    mongoose.connect( process.env.MONGO_URI )
+  }
+  let product = await Product.findOne( { slug: context.query.slug } )
+  let variants = await Product.find({title : product.title})
+  let colorSizeSlug = {}
+  for (let item of variants) {
+    if(Object.keys(colorSizeSlug).includes(item.color)){
+      colorSizeSlug[item.color][item.size] = {slug : item.slug}
+    }
+    else{
+      colorSizeSlug[item.color] = {}
+      colorSizeSlug[item.color][item.size] = {slug : item.slug}
+    }
+  }
+  return {
+    props: { product: JSON.parse( JSON.stringify( product )),variants: JSON.parse( JSON.stringify( colorSizeSlug ) ) }
+  }
+}
 export default Slug
