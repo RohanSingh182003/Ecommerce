@@ -38,12 +38,12 @@ const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems } ) => {
           </nav>
           <div className="absolute top-0 right-0 md:top-6 md:right-6 cursor-pointer">
             <div className='flex md:space-x-2'>
-            <Link href={'/login'}><a><RiAccountCircleFill className='text-3xl text-pink-500 mt-2 md:mt-0 md:m-2' /></a></Link>
-            <a><AiOutlineShoppingCart className='text-3xl text-pink-500 m-2 md:m-0'  onClick={toggleSidebar}/></a>
+              <Link href={'/login'}><a><RiAccountCircleFill className='text-3xl text-pink-500 mt-2 md:mt-0 md:m-2' /></a></Link>
+              <a><AiOutlineShoppingCart className='text-3xl text-pink-500 m-2 md:m-0' onClick={toggleSidebar} /></a>
             </div>
           </div>
           {/* Slider starts here */}
-          <div ref={ref} className="absolute top-0 right-0 bg-gray-100 px-10 pt-2 h-[100vh] transform translate-x-full transition-transform">
+          <div ref={ref} className="absolute top-0 right-0 bg-gray-100 px-10 pt-2 h-[100vh] transform translate-x-full transition-transform overflow-y-scroll">
             <span className='absolute right-9 top-6 cursor-pointer' onClick={toggleSidebar}><GrClose /></span>
             <ul className='mt-14 list-decimal'>
               <div className="flex">
@@ -54,11 +54,13 @@ const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems } ) => {
               {Object.keys( cart ).length <= 0 && <div className='my-5 text-center font-bold text-red-500'>Your cart is Empty!</div>}
               {Object.keys( cart ).map( ( k ) => {
                 return <li key={k}><div className="flex my-6">
-                  <div className="w-2/3 font-semibold flex justify-center items-center my-6">{cart[k].prodName}</div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-red-500 cursor-pointer' onClick={() => { RemoveFromCart( 'homeappliances' ) }} /><span>{cart[k].qty}</span><FaPlus className='text-green-500 cursor-pointer' onClick={() => { addItems( 'homeappliances' ) }} /></div>
-                </div></li>
+                  <div className="w-2/3 font-semibold flex justify-center items-center my-6">{cart[k].prodName}({cart[k].size}/{cart[k].varient})</div><div className="w-1/3 font-semibold flex justify-center items-center space-x-2"><FaMinus className='text-red-500 cursor-pointer' onClick={() => { RemoveFromCart( k ) }} /><span>{cart[k].qty}</span><FaPlus className='text-green-500 cursor-pointer' onClick={() => { addItems( k ) }} /></div>
+                </div>
+                </li>
               } )}
+              <div className='text-center pb-3'><span className='font-semibold text-md'>Total : </span><span className='font-bold text-lg'>{subTotal}</span></div>
             </ul>
-            <div className="flex">
+            <div className="flex mb-4 md:mb-8">
               <Link href={'/checkout'}><button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 p-2 focus:outline-none hover:bg-pink-600 rounded text-sm w-1/2">Checkout</button></Link>
               <button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 focus:outline-none hover:bg-pink-600 rounded text-sm p-2 w-1/2" onClick={() => { clearCart() }}>Clear&nbsp;Cart</button>
             </div>

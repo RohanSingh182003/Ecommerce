@@ -2,10 +2,12 @@ import Footer from '../components/Footer'
 import Navbar from '../components/Navbar'
 import '../styles/globals.css'
 import { useState , useEffect } from "react";
+import { useRouter } from 'next/router';
 
 // https://source.unsplash.com/random/1400x400/?ecommerce
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter()
   const [item, setItem] = useState({})
   const [subTotal, setSubTotal] = useState(0)
   let newItem = item;
@@ -41,6 +43,15 @@ function MyApp({ Component, pageProps }) {
     saveCart(newItem)
   }
 
+  const buyNow = (id,qty,prodName,price,size,varient) => {
+    setItem({})
+    saveCart({})
+    newItem[id] = {qty ,price ,prodName,size,varient}
+    setItem(newItem)
+    saveCart(newItem)
+    router.push('/checkout')
+  }
+
   const clearCart = () => {
     setItem({})
     saveCart({})
@@ -48,6 +59,7 @@ function MyApp({ Component, pageProps }) {
 
   const RemoveFromCart = (id) => {
       if(newItem[id].qty<0){
+        console.log(newItem[id],newItem[id].qty)
         delete newItem[id]
       }
       else{
@@ -65,7 +77,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
     <Navbar cart={item} addToCart={addToCart} RemoveFromCart={RemoveFromCart} clearCart={clearCart} subTotal={subTotal} addItems={addItems} />
-    <Component cart={item} addToCart={addToCart} RemoveFromCart={RemoveFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} addItems={addItems} />
+    <Component cart={item} addToCart={addToCart} RemoveFromCart={RemoveFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} addItems={addItems} buyNow={buyNow} />
     <Footer/>
     </>)
 }
