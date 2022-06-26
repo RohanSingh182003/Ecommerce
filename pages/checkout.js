@@ -68,7 +68,7 @@ const Checkout = ( {subTotal , RemoveFromCart , cart , addItems}) => {
                     </div></li>
                   } )}
                 </ul>
-                {subTotal<=0? <div></div> : <div className='text-center pb-6'><span className='font-semibold text-md'>Total : </span><span className='font-bold text-lg'>{subTotal}</span></div>}
+                {subTotal<=0? <div></div> : <div className='text-center pb-6'><span className='font-semibold text-md'>Total : </span><span className='font-bold text-lg'>₹{subTotal}</span></div>}
               </div>
               <div className="p-2 w-full my-12">
                 <Link href={'/order'}><button className="flex mx-auto text-white bg-pink-500 border-0 py-2 px-8 focus:outline-none hover:bg-pink-600 rounded text-lg">Place Your Order</button></Link>

@@ -58,7 +58,7 @@ const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems } ) => {
                 </div>
                 </li>
               } )}
-              <div className='text-center pb-3'><span className='font-semibold text-md'>Total : </span><span className='font-bold text-lg'>{subTotal}</span></div>
+              <div className='text-center pb-3'><span className='font-semibold text-md'>Total : </span><span className='font-bold text-lg'>₹{subTotal}</span></div>
             </ul>
             <div className="flex mb-4 md:mb-8">
               <Link href={'/checkout'}><button className="flex mt-8 mx-3 items-center text-white bg-pink-500 border-0 p-2 focus:outline-none hover:bg-pink-600 rounded text-sm w-1/2">Checkout</button></Link>

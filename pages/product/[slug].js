@@ -2,6 +2,8 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import mongoose from 'mongoose'
 import Product from '../../models/Product'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Slug = ({addToCart , product , variants , buyNow}) => {
   const router = useRouter()
@@ -13,9 +15,27 @@ const Slug = ({addToCart , product , variants , buyNow}) => {
     let pinJson = await pins.json()
     if(pinJson.includes(parseInt(pin))){
     setService(true)
+    toast.success('Yah! This Pincode is serviceble', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   }
   else{
     setService(false)
+    toast.error('Sorry! This Pincode is not serviceble', {
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      });
   }
 }
   const handleOnChange = (e) => {
@@ -29,6 +49,17 @@ const Slug = ({addToCart , product , variants , buyNow}) => {
     window.location = url;
   }
   return <>
+  <ToastContainer
+position="top-center"
+autoClose={3000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
   <section className="text-gray-600 body-font overflow-hidden">
   <div className="container px-5 py-24 mx-auto">
     <div className="lg:w-4/5 mx-auto flex flex-wrap">
