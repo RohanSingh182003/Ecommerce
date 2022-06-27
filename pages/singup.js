@@ -1,8 +1,61 @@
-import React from 'react'
-import Link from 'next/link'
+import React, { useState } from 'react'
+import Link from 'next/link'  
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Singup = () => {
-    return (
+    const [name, setName] = useState()
+    const [email, setEmail] = useState()
+    const [password, setPassword] = useState()
+    const handleOnChange = ( e ) => {
+        if ( e.target.name == 'name' ) {
+            setName( e.target.value )
+        }
+        else if ( e.target.name == 'email' ) {
+            setEmail( e.target.value )
+        }
+        else if ( e.target.name == 'password' ) {
+            setPassword( e.target.value )
+        }
+    }
+
+    const handleOnSubmit = async ( e ) => {
+        e.preventDefault()
+        try {
+            let data = { name, email, password }
+            let res = await fetch( 'http://localhost:3000/api/singup', {
+                method: 'POST',
+                headers:{'Content-Type':'application/json'},
+                body: JSON.stringify( data )
+            } )
+            toast.success( `Welcome Mr/Mis ${name} (new user)`, {
+                position: "top-left",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            } );
+            setName( '' )
+            setEmail( '' )
+            setPassword( '' )
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    return ( <>
+        <ToastContainer
+            position="top-left"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+                        />
         <div className='md:my-10'>
             <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8">
@@ -14,24 +67,20 @@ const Singup = () => {
                             <Link href={'/login'}><a href="#" className="font-medium text-pink-600 hover:text-pink-500 mx-2">Sing in </a></Link>
                         </p>
                     </div>
-                    <form className="mt-8 space-y-6" action="#" method="POST">
+                    <form onSubmit={handleOnSubmit} className="mt-8 space-y-6" method="POST">
                         <input type="hidden" name="remember" value="true" />
                         <div className="rounded-md shadow-sm -space-y-px">
                             <div>
                                 <label htmlFor="name" className="sr-only">Email address</label>
-                                <input id="name" name="email" type="text" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Enter your name" />
+                                <input onChange={handleOnChange} value={name} id="name" name="name" type="text" autoComplete="name" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Enter your name" />
                             </div>
                             <div>
-                                <label htmlFor="email-address" className="sr-only">Email address</label>
-                                <input id="email-address" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Email address" />
-                            </div>
-                            <div>
-                                <label htmlFor="new-password" className="sr-only">Re-enter Password</label>
-                                <input id="new-password" name="new-password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Re-enter Password" />
+                                <label htmlFor="email" className="sr-only">Email address</label>
+                                <input onChange={handleOnChange} value={email} id="email" name="email" type="email" autoComplete="email" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Email address" />
                             </div>
                             <div>
                                 <label htmlFor="password" className="sr-only">Password</label>
-                                <input id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Password" />
+                                <input onChange={handleOnChange} value={password} id="password" name="password" type="password" autoComplete="current-password" required className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-pink-500 focus:border-pink-500 focus:z-10 sm:text-sm" placeholder="Password" />
                             </div>
                         </div>
                         <div>
@@ -49,6 +98,7 @@ const Singup = () => {
             </div>
 
         </div>
+        </>
     )
 }
 
