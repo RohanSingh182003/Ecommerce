@@ -8,25 +8,26 @@ const HomeAppliances = ( { products } ) => {
     <div>
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
-          <div className="flex flex-wrap -m-4">
+          <div className="flex flex-wrap -m-4 justify-center">
+            {Object.keys( products ).length == 0 && <p>Sorry! electronics section Of our stock is empty.New stock coming soon, Stay Tuned..</p>}
             {Object.keys( products ).map( ( item ) => {
               return <Link href={`/product/${products[item].slug}`} key={products[item]._id}><div className="lg:w-1/4 md:w-1/2 p-4 w-full shadow-xl">
                 <div className="block relative h-64 rounded overflow-hidden">
-                  <img alt="ecommerce" className="object-cover object-center w-full h-full block" src="https://rukminim2.flixcart.com/image/612/612/l26hdow0/bed/a/v/a/-original-imagdhfzzgphpzmx.jpeg?q=70" />
+                  <img alt="ecommerce" className="object-cover object-center w-full h-full block" src={products[item].img} />
                 </div>
                 <div className="mt-4">
                   <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">{products[item].catagory}</h3>
                   <h2 className="text-gray-900 title-font text-lg font-medium">{products[item].title}</h2>
                   <p className="mt-1">₹{products[item].price}</p>
                   <div className='space-x-2 mt-2'>
-                    {products[item].size.includes('M') && <span>M</span>}
-                    {products[item].size.includes('L') && <span>L</span>}
-                    {products[item].size.includes('XL') && <span>XL</span>}
+                    {products[item].size.includes( 'M' ) && <span className='border border-gray-300 p-1'>M</span>}
+                    {products[item].size.includes( 'L' ) && <span className='border border-gray-300 p-1'>L</span>}
+                    {products[item].size.includes( 'XL' ) && <span className='border border-gray-300 p-1'>XL</span>}
                   </div>
                   <div className='space-x-2 mt-2'>
-                    {products[item].color.includes('red') && <button className=" bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                    {products[item].color.includes('blue') && <button className=" bg-blue-500 rounded-full w-6 h-6 focus:outline-none"></button>}
-                    {products[item].color.includes('yellow') && <button className=" bg-yellow-500 rounded-full w-6 h-6 focus:outline-none"></button>}
+                    {products[item].color.includes( 'red' ) && <button className=" bg-red-500 rounded-full w-6 h-6 focus:outline-none"></button>}
+                    {products[item].color.includes( 'blue' ) && <button className=" bg-blue-500 rounded-full w-6 h-6 focus:outline-none"></button>}
+                    {products[item].color.includes( 'yellow' ) && <button className=" bg-yellow-500 rounded-full w-6 h-6 focus:outline-none"></button>}
                   </div>
                 </div>
               </div></Link>
