@@ -3,7 +3,10 @@ import connectDb from "../../middleware/mongoose"
 
 const handler = async (req,res) => {
     if(req.method === 'POST'){
-        let u =await new User(req.body)
+        const CryptoJS = require("crypto-js");
+        let {name ,email ,password} = await req.body
+        let ciphertext = CryptoJS.AES.encrypt(JSON.stringify(password), 'secret key 123').toString();
+        let u =await new User({name ,email ,password : ciphertext})
         await u.save()
         res.status(200).json({success:true});
     }
