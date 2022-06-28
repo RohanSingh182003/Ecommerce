@@ -21,28 +21,27 @@ const Singup = () => {
 
     const handleOnSubmit = async ( e ) => {
         e.preventDefault()
-        try {
             let data = { name, email, password }
             let res = await fetch( 'http://localhost:3000/api/singup', {
                 method: 'POST',
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify( data )
             } )
-            toast.success( `Welcome Mr/Mis ${name} (new user)`, {
-                position: "top-left",
-                autoClose: 2000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-            } );
             setName( '' )
             setEmail( '' )
             setPassword( '' )
-        } catch (error) {
-            console.log(error)
-        }
+            let response = await res.json()
+            if(response.success){
+                toast.success( `Welcome Mr/Mis ${name} (new user)`, {
+                    position: "top-left",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                } );
+            }
     }
     return ( <>
         <ToastContainer
