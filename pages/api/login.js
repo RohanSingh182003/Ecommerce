@@ -11,7 +11,6 @@ const handler = async (req,res) => {
         if(user){
         if(user.email == req.body.email && decryptedData == JSON.stringify(req.body.password)){
             let token = jwt.sign(req.body, 'shhhhh');
-            console.log(token)
             res.status(200).json({success:true ,token});
         }
         else{

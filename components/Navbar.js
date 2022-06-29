@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRef } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
@@ -8,7 +8,7 @@ import { FaPlus, FaMinus } from 'react-icons/fa';
 
 // Empty Space Code = &nbsp;
 
-const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems } ) => {
+const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems, user , logout } ) => {
   const ref = useRef()
   const toggleSidebar = () => {
     if ( ref.current.classList.contains( 'translate-x-full' ) ) {
@@ -20,6 +20,7 @@ const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems } ) => {
       ref.current.classList.add( 'translate-x-full' )
     }
   }
+  const [dropdown, setDropdown] = useState(false)
   return (
     <div className='sticky top-0 bg-gray-50 z-10'>
       <header className="text-gray-600 body-font bg-gray-50">
@@ -31,14 +32,22 @@ const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems } ) => {
             <span className="ml-3 text-xl">Ecommerce</span>
           </a></Link>
           <nav className="md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400	flex flex-wrap items-center text-base justify-center">
-            <Link href={'/fashion'}><a className="mr-5 hover:text-gray-900">Fashion</a></Link>
-            <Link href={'/electronics'}><a className="mr-5 hover:text-gray-900">Electronics</a></Link>
-            <Link href={'/homeappliances'}><a className="mr-5 hover:text-gray-900">Home Appliances</a></Link>
-            <Link href={'/grocery'}><a className="mr-5 hover:text-gray-900">Grocery</a></Link>
+            <Link href={'/fashion'}><a className="mr-5 hover:text-pink-700">Fashion</a></Link>
+            <Link href={'/electronics'}><a className="mr-5 hover:text-pink-700">Electronics</a></Link>
+            <Link href={'/homeappliances'}><a className="mr-5 hover:text-pink-700">Home Appliances</a></Link>
+            <Link href={'/grocery'}><a className="mr-5 hover:text-pink-700">Grocery</a></Link>
           </nav>
           <div className="absolute top-0 right-0 md:top-6 md:right-6 cursor-pointer">
             <div className='flex md:space-x-2'>
-              <Link href={'/login'}><a><RiAccountCircleFill className='text-3xl text-pink-500 mt-2 md:mt-0 md:m-2' /></a></Link>
+              {user.value && <RiAccountCircleFill className='text-3xl text-pink-500 mt-2 md:mt-0 md:m-2' onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}}/>}
+            {dropdown && <div className='bg-gray-100 absolute top-0 right-0 md:top-5 md:right-14 p-4 rounded-md cursor-pointer w-36' onMouseOver={()=>{setDropdown(true)}} onMouseLeave={()=>{setDropdown(false)}}>
+                <ul className='space-y-2'>
+                  <Link href={'/myaccount'}><a><li className='hover:text-pink-700'>My Account</li></a></Link>
+                  <Link href={'/myorders'}><a><li className='hover:text-pink-700 my-2'>Orders</li></a></Link>
+                  <li className='hover:text-pink-700' onClick={logout}>LogOut</li>
+                </ul>
+              </div>}
+              {!user.value && <Link href={'/login'}><a><button className='text-pink-600 hover:text-pink-800 mt-2 md:mt-0 rounded-lg'>Login</button></a></Link>}
               <a><AiOutlineShoppingCart className='text-3xl text-pink-500 m-2 md:m-0' onClick={toggleSidebar} /></a>
             </div>
           </div>
