@@ -11,9 +11,9 @@ const Singup = () => {
           router.push('/')
         }
       }, [])
-    const [name, setName] = useState()
-    const [email, setEmail] = useState()
-    const [password, setPassword] = useState()
+    const [name, setName] = useState('')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const handleOnChange = ( e ) => {
         if ( e.target.name == 'name' ) {
             setName( e.target.value )
@@ -29,7 +29,7 @@ const Singup = () => {
     const handleOnSubmit = async ( e ) => {
         e.preventDefault()
             let data = { name, email, password }
-            let res = await fetch( 'http://localhost:3000/api/singup', {
+            let res = await fetch( `${process.env.NEXT_PUBLIC_HOST}/api/singup`, {
                 method: 'POST',
                 headers:{'Content-Type':'application/json'},
                 body: JSON.stringify( data )

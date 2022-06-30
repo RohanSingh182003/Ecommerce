@@ -85,6 +85,7 @@ function MyApp( { Component, pageProps } ) {
     localStorage.removeItem( 'token' )
     setKey( Math.random() )
     setUser( { value: null } )
+    router.push('/')
   }
   return (
     <>
@@ -92,7 +93,7 @@ function MyApp( { Component, pageProps } ) {
         color="#ec4899"
         startPosition={0.3}
         stopDelayMs={200}
-        height={3}
+        height={2}
         showOnShallow={true}
       />
       <Navbar cart={item} addToCart={addToCart} RemoveFromCart={RemoveFromCart} clearCart={clearCart} subTotal={subTotal} addItems={addItems} key={key} user={user} logout={logout} />

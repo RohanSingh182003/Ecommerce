@@ -53,7 +53,7 @@ const Navbar = ( { clearCart, subTotal, RemoveFromCart, cart, addItems, user , l
           </div>
           {/* Slider starts here */}
           <div ref={ref} className="absolute top-0 right-0 bg-gray-100 px-10 pt-2 h-[100vh] transform translate-x-full transition-transform overflow-y-scroll">
-            <span className='absolute right-9 top-6 cursor-pointer' onClick={toggleSidebar}><GrClose /></span>
+            <span className='absolute right-6 top-4 md:top-6 cursor-pointer' onClick={toggleSidebar}><GrClose /></span>
             <ul className='mt-14 list-decimal'>
               <div className="flex">
                 <h3 className='w-2/3 font-extrabold text-pink-500 text-center'>Products</h3>
