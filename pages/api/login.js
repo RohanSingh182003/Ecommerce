@@ -10,7 +10,9 @@ const handler = async (req,res) => {
         let decryptedData = bytes.toString(CryptoJS.enc.Utf8);
         if(user){
         if(user.email == req.body.email && decryptedData == JSON.stringify(req.body.password)){
-            let token = jwt.sign(req.body, process.env.JWT_TOKEN);
+            let token = jwt.sign(req.body, process.env.JWT_TOKEN, {
+                expiresIn: "2d"
+              });
             res.status(200).json({success:true ,token});
         }
         else{

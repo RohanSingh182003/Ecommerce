@@ -39,7 +39,7 @@ const Singup = () => {
             setPassword( '' )
             let response = await res.json()
             if(response.success){
-                toast.success( `Welcome Mr/Mis ${name} (new user)`, {
+                toast.success( `Welcome to Ecommerce.com Mr/Mis ${name} (new user)`, {
                     position: "top-left",
                     autoClose: 2000,
                     hideProgressBar: false,
@@ -48,6 +48,9 @@ const Singup = () => {
                     draggable: true,
                     progress: undefined,
                 } );
+                setTimeout(() => {
+                    router.push('/login')
+                }, 1500);
             }
     }
     return ( <>
